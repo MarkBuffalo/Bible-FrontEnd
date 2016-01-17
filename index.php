@@ -14,13 +14,18 @@
 		<script type="text/javascript" src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
+				
+				$(".loading").hide();
+				
 				$("form").submit(function (e) {
+					$(".loading").show();
 					e.preventDefault(); //prevent default form submit
 					$.ajax({
 						url: 'classes/SearchResults.php',
 						type: 'get',
 						data: { s: $("#searchQueryInput").val() },
 						success: function (data) {
+							$(".loading").hide();
 							$("#searchResults").html(data);
 						},
 						cache: false
@@ -56,6 +61,11 @@
                 </form>
                 <p><br/></p>
             </section>
+			
+			<div class="loading">
+				<p><img src="img/ripple.gif" width="120" height="120" alt="Loading icon" title="Blue-green loading icon. Only shown while loading search results. It's hidden afterwards."/></p>
+			</div>
+			
 			<section id="searchResults">
 				<p>
 					

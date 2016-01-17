@@ -49,3 +49,9 @@ body
     font-family: 'Josefin Slab', serif;
 	font-size: 14pt;
 }
+.loading
+{
+	width: 120px;
+	height: 120px;
+	margin: 0 auto;
+}
