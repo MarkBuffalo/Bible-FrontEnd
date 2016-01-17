@@ -118,7 +118,7 @@
 					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
 					if ($parameters[2] > $parameters[3])
 					{
-						return "ChapterTo can't be greater than ChapterFrom.";
+						return "VerseTo can't be greater than VerseFrom.";
 					}
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2], $parameters[3]); // siii
 				} break;
