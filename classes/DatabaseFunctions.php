@@ -10,7 +10,8 @@
 		function checkSearchType($search)
 		{
 			global $dqo;
-
+			
+			
 			foreach ($dqo as $d)
 			{
 
@@ -88,6 +89,8 @@
 					return queryDatabase($query, $parameters, $parameterTypes, $queryType);
 				}
 			}
+	
+			return "No results found.";
 		}
 
 
