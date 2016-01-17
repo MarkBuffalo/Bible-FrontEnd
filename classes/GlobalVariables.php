@@ -1,6 +1,5 @@
 <?php
 
-
 		$servername = "";
 		$databasename = "";
 		$username = "";
@@ -30,6 +29,9 @@
 		// Search format: Genesis
 		// May contain space at the beginning.
 		$bookQuery = "SELECT Book, Chapter, Verse, Word FROM `Contents` WHERE Book = ?";
+
+		// Basic keyword query.
+		$keywordQuery = "SELECT Book, Chapter, Verse, Word FROM `Contents` WHERE Word LIKE ?";
 
 		// Array accessibility:
 		/*
@@ -63,6 +65,9 @@
 		$regexBookChapter = "/^(\w{1,13})\s(\d{1,3})$/";
 		$regexBook = "/^(\w{1,13})$/";
 
+		// Keyword query
+		$regexKeyword = "/^(\w{3,15})$/";
+
 
 		$dqo = array();
 		// Song of Solomon
@@ -85,5 +90,9 @@
 		array_push($dqo, new DatabaseQueryObject($bookChapterFromToQuery, array(), "sii", $regexBookChapterFromChapterTo, 2));
 		array_push($dqo, new DatabaseQueryObject($bookChapterQuery, array(), "si", $regexBookChapter, 3));
 		array_push($dqo, new DatabaseQueryObject($bookQuery, array(), "s", $regexBook, 4));
+
+		// Keyword search
+		array_push($dqo, new DatabaseQueryObject($keywordQuery, array(), "s", $regexKeyword, 5));
+
 
 ?>

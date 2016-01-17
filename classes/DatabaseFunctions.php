@@ -14,15 +14,15 @@
 			
 			foreach ($dqo as $d)
 			{
-
+				// Our DatabaseQueryObject properties
 				$query = $d->query;
 				$parameters = $d->parameters;
 				$parameterTypes = $d->parameterTypes;
 				$regex = $d->regex;
 				$queryType = $d->queryType;
 
-				// Is it one of our valid queries?
-				if (preg_match($regex, $search))
+				// Is it one of our valid queries, and *NOT* a keyword search?
+				if ($queryType != 5 && preg_match($regex, $search))
 				{
 					// We've got a match. Split the query into an array based on regex capture groups.
 					$contents = getPregSplitArray($regex, $search);
@@ -59,9 +59,7 @@
 								array_push($parameters, $tmpParameters[$j]);
 							}
 						}
-					}
-
-					// Found a number book. Example: 2 Peter. Combine tmpParameters[0] and tmpParameters[1].
+					} // Found a number book. Example: 2 Peter. Combine tmpParameters[0] and tmpParameters[1].
 					else if (is_numeric($tmpParameters[0]))
 					{
 						// Combine the full book name.
@@ -77,19 +75,32 @@
 								array_push($parameters, $tmpParameters[$j]);
 							}
 						}
-					}
-
-					// Book without multiple accompanying books. Example: Genesis.
+					} // Book without multiple accompanying books. Example: Genesis.
 					else if (is_string($tmpParameters[0]))
 					{
 						$parameters = $tmpParameters;
 					}
 
 					// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
-					return queryDatabase($query, $parameters, $parameterTypes, $queryType);
+					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType);
+
+					// Found something
+					if (strlen($results) > 10)
+					{
+						return $results;
+					}
+				}
+				else if (preg_match($regex, $search) && $queryType == 5)
+				{
+					$results = queryDatabase($query, array($search), $parameterTypes, $queryType);
+					if (strlen($results) > 10)
+					{
+						return $results;
+					}
 				}
 			}
-	
+
+
 			return "No results found.";
 		}
 
@@ -107,7 +118,8 @@
 			$db = new mysqli($servername, $username, $password, $databasename);
 			$stmt = $db->prepare($query);
 
-			switch ($queryType) {
+			switch ($queryType)
+			{
 				case 0: // bookChapterVerse
 				{
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
@@ -118,6 +130,9 @@
 					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
 					if ($parameters[2] > $parameters[3])
 					{
+						// Free up resources.
+						$stmt->free_result();
+						$stmt->close();
 						return "VerseTo can't be greater than VerseFrom.";
 					}
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2], $parameters[3]); // siii
@@ -128,6 +143,9 @@
 					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
 					if ($parameters[1] > $parameters[2])
 					{
+						// Free up resources.
+						$stmt->free_result();
+						$stmt->close();
 						return "ChapterTo can't be greater than ChapterFrom.";
 					}
 
@@ -143,8 +161,20 @@
 				{
 					$stmt->bind_param($parameterType, $parameters[0]); // s
 				} break;
+				case 5: // Non-book-based search. Allows searching words. 
+				{
+					$fixedParameter = "%" . $parameters[0] . "%";
+					$stmt->bind_param($parameterType, $fixedParameter); // s
+				}break;
 				
-				default: { die("Incorrect value entered"); } break;
+				default:
+				{
+					// Free up resources.
+					$stmt->free_result();
+					$stmt->close();
+
+					die("Incorrect value entered");
+				} break;
 			}
 			$stmt->execute();
 
@@ -155,10 +185,22 @@
 			$numResults = 0;
 
 			// Print results.
-			while ($stmt->fetch())
+			if ($queryType != 5)
 			{
-				$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
-				$numResults++;
+				while ($stmt->fetch())
+				{
+					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace($parameters[0], "<strong>".$parameters[0]."</strong>", $Word) . " <br/>";
+					$numResults++;
+				}
+			}
+			else
+			{
+				while ($stmt->fetch())
+				{
+					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace($parameters[0], "<strong>".$parameters[0]."</strong>", $Word) . " <br/>";
+					//$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
+					$numResults++;
+				}
 			}
 
 
@@ -166,8 +208,9 @@
 			$stmt->free_result();
 			$stmt->close();
 
-			if ($numResults == 0) {
-				$results = "No results for search<br/>";
+			if ($numResults == 0)
+			{
+				return $numResults;
 			}
 
 			// Send the data back to checkSearch()
