@@ -1,0 +1,51 @@
+body
+{
+	margin: 0;
+}
+
+#wrap
+{
+    width: 960px;
+    margin: 0 auto;
+}
+#searchBox
+{
+    width: 520px;
+    font-size: 17pt;
+    margin: 0 auto;
+}
+#searchBox input[type="text"], #searchBox input[type="submit"]
+{
+    font-size: 17pt;
+    color: #61f3a6;
+    background-color: #ffffff;
+    border: solid 1px #eaeaea;
+    font-family: 'Josefin Slab', serif;
+    border-radius: 14px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+#searchBox label
+{
+    font-family: 'Josefin Slab', serif;
+}
+
+#searchBox input[type="text"], #searchBox input[type="submit"]
+{
+    height: 40px;
+}
+#mainContent h1
+{
+    text-align: center;
+    font-family: 'Josefin Slab', serif;
+}
+#wrap > #logo-holder
+{
+    margin: 0 auto;
+    width: 256px;
+}
+#searchResults
+{
+    font-family: 'Josefin Slab', serif;
+	font-size: 14pt;
+}
