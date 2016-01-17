@@ -90,27 +90,6 @@
 			}
 		}
 
-		/*
-		checkSearchType("Song of Solomon 4:1");
-		checkSearchType("Song of Solomon 4:1-5");
-		checkSearchType("Song of Solomon 4");
-		checkSearchType("Song of Solomon 4-4");
-		checkSearchType("Song of Solomon");
-
-
-		checkSearchType("2 Thessalonians 1:1");
-		checkSearchType("2 Peter 1:1-5");
-		checkSearchType("2 Peter 2");
-		checkSearchType("2 Peter 1-2");
-		checkSearchType("2 Peter");
-
-
-		checkSearchType("Genesis 2:1");
-		checkSearchType("Genesis 1:1-5");
-		checkSearchType("Genesis 1");
-		checkSearchType("Genesis 1-2");
-		checkSearchType("Genesis");*/
-
 
 		function queryDatabase($query, $parameters, $parameterType, $queryType)
 		{
@@ -130,22 +109,38 @@
 				{
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
 				} break;
+				
 				case 1: // bookChapterVerseFromVerseTo
 				{
+					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
+					if ($parameters[2] > $parameters[3])
+					{
+						return "ChapterTo can't be greater than ChapterFrom.";
+					}
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2], $parameters[3]); // siii
 				} break;
+				
 				case 2: // bookChapterFromChapterTo
 				{
+					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
+					if ($parameters[1] > $parameters[2])
+					{
+						return "ChapterTo can't be greater than ChapterFrom.";
+					}
+
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
 				} break;
+				
 				case 3: // bookChapter
 				{
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1]); // si
 				} break;
+				
 				case 4: // Book
 				{
 					$stmt->bind_param($parameterType, $parameters[0]); // s
 				} break;
+				
 				default: { die("Incorrect value entered"); } break;
 			}
 			$stmt->execute();
