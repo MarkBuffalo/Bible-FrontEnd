@@ -193,7 +193,6 @@
 			{
 				while ($stmt->fetch())
 				{
-					$paramSanitized = "";
 					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace(htmlentities($parameters[0]), "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/>";
 					$numResults++;
 				}
