@@ -193,8 +193,8 @@
 			{
 				while ($stmt->fetch())
 				{
-					// Oops...
-					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . htmlentities(stip_tags($parameters[0]), "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/>";
+					$paramSanitized = "";
+					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace(htmlentities($parameters[0]), "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/>";
 					$numResults++;
 				}
 			}
