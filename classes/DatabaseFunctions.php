@@ -11,7 +11,6 @@
 		{
 			global $dqo;
 			
-			
 			foreach ($dqo as $d)
 			{
 				// Our DatabaseQueryObject properties
@@ -99,15 +98,12 @@
 					}
 				}
 			}
-
-
 			return "No results found.";
 		}
 
 
 		function queryDatabase($query, $parameters, $parameterType, $queryType)
 		{
-
 			global $servername;
 			global $databasename;
 			global $username;
@@ -189,7 +185,7 @@
 			{
 				while ($stmt->fetch())
 				{
-					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace($parameters[0], "<strong>".$parameters[0]."</strong>", $Word) . " <br/>";
+					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
 					$numResults++;
 				}
 			}
@@ -197,8 +193,8 @@
 			{
 				while ($stmt->fetch())
 				{
-					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace($parameters[0], "<strong>".$parameters[0]."</strong>", $Word) . " <br/>";
-					//$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
+					// Oops...
+					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . htmlentities(stip_tags($parameters[0]), "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/>";
 					$numResults++;
 				}
 			}
