@@ -185,10 +185,14 @@
 			{
 				while ($stmt->fetch())
 				{
+					// Return database column results.
 					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
 					$numResults++;
 				}
 			}
+			
+			// Query contains user-defined search. Must sanitize output. If attacker somehow gets past validation, this is the last line of defense.
+			// While our database will not find anything that could be used for XSS, and therefore not return anything, this would be sloppy coding if I didn't account for it.
 			else
 			{
 				while ($stmt->fetch())
