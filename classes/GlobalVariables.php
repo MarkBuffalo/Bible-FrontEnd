@@ -32,6 +32,9 @@
 
 		// Basic keyword query.
 		$keywordQuery = "SELECT Book, Chapter, Verse, Word FROM `Contents` WHERE Word LIKE ?";
+		
+		
+		$chapterCountQuery = "SELECT COUNT(DISTINCT Chapter) FROM `Contents` WHERE Book = ?";
 
 		// Array accessibility:
 		/*

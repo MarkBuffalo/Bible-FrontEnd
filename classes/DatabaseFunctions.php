@@ -81,7 +81,7 @@
 					}
 
 					// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
-					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType);
+					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search);
 
 					// Found something
 					if (strlen($results) > 10)
@@ -91,7 +91,7 @@
 				}
 				else if (preg_match($regex, $search) && $queryType == 5)
 				{
-					$results = queryDatabase($query, array($search), $parameterTypes, $queryType);
+					$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search);
 					if (strlen($results) > 10)
 					{
 						return $results;
@@ -100,9 +100,30 @@
 			}
 			return "No results found.";
 		}
+		
+		// This is so we can find the number of chapters in a book.
+		function getChapterCount($book)
+		{
+			global $servername;
+			global $databasename;
+			global $username;
+			global $password;
+			global $chapterCountQuery;
+			
+			$db = new mysqli($servername, $username, $password, $databasename);
+			$stmt = $db->prepare($chapterCountQuery);
+			
+			$stmt->bind_param("s", $book);
+			$stmt->execute();
+
+			$stmt->store_result();
+			$stmt->bind_result($NumChapters);
+			
+			return $NumChapters;
+		}
 
 
-		function queryDatabase($query, $parameters, $parameterType, $queryType)
+		function queryDatabase($query, $parameters, $parameterType, $queryType, $searchQuery)
 		{
 			global $servername;
 			global $databasename;
@@ -113,12 +134,15 @@
 
 			$db = new mysqli($servername, $username, $password, $databasename);
 			$stmt = $db->prepare($query);
+			
+			$numChapters = 0;
 
 			switch ($queryType)
 			{
 				case 0: // bookChapterVerse
 				{
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
+					$numChapters = 1;
 				} break;
 				
 				case 1: // bookChapterVerseFromVerseTo
@@ -132,6 +156,8 @@
 						return "VerseTo can't be greater than VerseFrom.";
 					}
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2], $parameters[3]); // siii
+					$numChapters = 1;
+
 				} break;
 				
 				case 2: // bookChapterFromChapterTo
@@ -144,23 +170,27 @@
 						$stmt->close();
 						return "ChapterTo can't be greater than ChapterFrom.";
 					}
-
-					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
+					
+					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii	
+					$numChapters = 1;
 				} break;
 				
 				case 3: // bookChapter
 				{
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1]); // si
+					$numChapters = 1;
 				} break;
 				
 				case 4: // Book
 				{
 					$stmt->bind_param($parameterType, $parameters[0]); // s
+					$numChapters = 1;
 				} break;
 				case 5: // Non-book-based search. Allows searching words. 
 				{
 					$fixedParameter = "%" . $parameters[0] . "%";
 					$stmt->bind_param($parameterType, $fixedParameter); // s
+					$numChapters = 0;
 				}break;
 				
 				default:
@@ -181,13 +211,35 @@
 			$numResults = 0;
 
 			// Print results.
+			
+			$chapters = 0;
+			$lastChapter = 0;
+			$lastBook = "";
+			
+			
 			if ($queryType != 5)
 			{
+				if ($numChapters > 0)
+				{
+					$chapters = getChapterCount($parameters[0]);				
+				}
+				
+				$results .= "<h1 style='text-align: center;'>" . htmlspecialchars($searchQuery) . "</h1>";
+				$results .= "<p><br/></p>";
+				
 				while ($stmt->fetch())
 				{
-					// Return database column results.
-					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . $Word . " <br/>";
+					// This will always be different if the last chapter was different. This allows us to separate chapters with the below HTML.
+					if ($Chapter != $lastChapter)
+					{
+						$results .= "<p><br/></p>";
+						$results .= "<h2>Chapter " . $Chapter . "</h2>";
+						$results .= "<hr/>";
+					}
+					$results .= "<strong>" . $Chapter . "</strong><em>:</em><strong>" . $Verse . "</strong> <em>-</em> " . $Word . " <br/><br/>";
 					$numResults++;
+					$lastChapter = $Chapter;
+
 				}
 			}
 			
@@ -197,8 +249,16 @@
 			{
 				while ($stmt->fetch())
 				{
-					$results .= $BookName . " " . $Chapter . ":" . $Verse . " - " . str_replace($parameters[0], "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/>";
+					// To separate results by book name.
+					if ($BookName != $lastBook)
+					{
+						$results .= "<p><br/></p>";
+						$results .= "<h2>Results from ". $BookName . "</h2>";
+						$results .= "<hr/>";						
+					}
+					$results .= "<em>" . $BookName . "</em> <strong>" . $Chapter . "</strong><em>:</em><strong>" . $Verse . "</strong> <em>-</em> " . str_replace($parameters[0], "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/><br/>";
 					$numResults++;
+					$lastBook = $BookName;
 				}
 			}
 
