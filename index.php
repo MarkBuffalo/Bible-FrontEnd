@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="css/arkamis.css" rel="stylesheet">
 	<link rel="icon" type="image/png" href="img/Holy_Bible.png">
 
 	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
@@ -20,7 +20,7 @@
 				
 			$(".loading").hide();
 				
-			$("#search").submit(function (e) {
+			$("form").submit(function (e) {
 				$(".loading").show();
 				e.preventDefault(); //prevent default form submit
 				
