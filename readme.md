@@ -29,7 +29,7 @@ Currently only supports English. Chinese will be added shortly.
 
 ## Full Chinese Book List ##
 
- - 创世记 - 
+ - 创世记
  - 出埃及
  - 利未记
  - 民数记
