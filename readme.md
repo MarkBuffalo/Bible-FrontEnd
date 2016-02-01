@@ -18,6 +18,8 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
   - oppress
   - hate
  
+**Please note that keywords are restricted by the language of KJV. You may not find what you're looking for by using common English terms today.**
+ 
 ## Chinese Example Queries: ##
 
  - **Book Searches**
@@ -27,7 +29,7 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
  - **Keyword searches**
   - Not yet implemented
 
-## Full Chinese Book List ##
+## Full Chinese Book List (Chronological Order) ##
 
  - 创世记
  - 出埃及
