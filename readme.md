@@ -1,4 +1,4 @@
-Currently only supports English. Chinese will be added shortly.
+Currently only supports English and Simplified Chinese. Traditional Chinese will be added next.
 
 **Notes**:
 
