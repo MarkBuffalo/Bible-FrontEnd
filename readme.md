@@ -10,6 +10,9 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
   - As far as I know, the words are still intact and have their same meaning. 
   - When this occurs, the missing verse is shown as, "**見上節**". 
   - This feature also helps to maintain backwards compability with English searches and processing, without needing lots of extra code.
+- You do not need to change your language to search either English or Chinese. You may perform a search using either language, and it will be recognized.
+- Supports Chinese dashes, `——` (double),  `—` (single), and English dashes (-). 
+ - This is to maintain compatibility with Chinese Input Methods, which generally force two dashes when using the shift+dash button.
 
 ## English Example Queries: ##
 
