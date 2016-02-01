@@ -5,7 +5,7 @@ Currently only supports English. Chinese will be added shortly.
  - Responsive design is now implemented.
  - Uses PHP / MySQL
  - Doesn't currently have pagination
- - Some verses are missing in Chinese. This does not mean they've been removed: rather, the removed verse and the previous verse have been combined. This is because, apparently, some of these sentences do not make sense on their own. When this occurs, they missing verse is shown as, "見上節。" 
+ - Some verses are *missing* in Chinese. This does not mean they've been removed: rather, the removed verse and the previous verse have been combined. This is because, apparently, some of these sentences do not make sense on their own. When this occurs, they missing verse is shown as, "**見上節**". 
 
 ## English Example Queries: ##
 
