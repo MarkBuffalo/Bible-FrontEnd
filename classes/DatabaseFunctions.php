@@ -235,7 +235,7 @@
 				case 5: // Non-book-based search. Allows searching words. 
 				{
 					// Kills the PHP script if the parameters are too long.
-					validateNonEnglishBookParameter(parameters[0], $lang, 20);
+					validateNonEnglishBookParameter(parameters[0], $lang, 7);
 
 					$fixedParameter = "%" . $parameters[($lang == "English") ? 0:1] . "%";
 					$stmt->bind_param($parameterType, $fixedParameter); // s
@@ -264,7 +264,7 @@
 			$lastBook = "";
 			
 			$chapterWordNativeLanguage = ($lang == "English") ? "Chapter":"章节";
-			$resultsWordNativeLanguage = ($lang == "Results for") ? "Chapter":"搜索结果";
+			$resultsWordNativeLanguage = ($lang == "English") ? "Results for":"搜索结果";
 			
 			
 			

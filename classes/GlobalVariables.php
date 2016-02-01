@@ -6,7 +6,6 @@
 		$password = "";
 
 
-
         require_once("DatabaseQueryObject.php");
 
 
