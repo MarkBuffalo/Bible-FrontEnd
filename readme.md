@@ -28,7 +28,7 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
   - oppress
   - hate
  
-**Please note that keywords are restricted by the language of KJV. You may not find what you're looking for by using common English terms today.**
+**Please note that keywords are restricted by the language of KJV. You may not find what you're looking for by using the common English words and terms of present times.**
  
 ## Chinese Example Queries: ##
 
