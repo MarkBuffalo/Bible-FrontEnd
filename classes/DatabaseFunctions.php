@@ -19,12 +19,14 @@
 				$parameterTypes = $d->parameterTypes;
 				$regex = $d->regex;
 				$queryType = $d->queryType;
-
+				$lang = $d->lang;
+				
 				// Is it one of our valid queries, and *NOT* a keyword search?
 				if ($queryType != 5 && preg_match($regex, $search))
 				{
 					// We've got a match. Split the query into an array based on regex capture groups.
 					$contents = getPregSplitArray($regex, $search);
+					
 
 					// How big is our array?
 					$conCount = count($contents);
@@ -38,6 +40,7 @@
 						// If it's not the first or last option (both of which are empty when using preg_split()), add it to the parameter list.
 						if ($i != 0 && $i != ($conCount - 1))
 						{
+							//echo "Index: [" . $i . "] value: " . $contents[$i] . "<br/>"; Great. Chinese is correct.
 							array_push($tmpParameters, $contents[$i]);
 						}
 					}
@@ -81,7 +84,7 @@
 					}
 
 					// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
-					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search);
+					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search, $lang);
 
 					// Found something
 					if (strlen($results) > 10)
@@ -91,7 +94,7 @@
 				}
 				else if (preg_match($regex, $search) && $queryType == 5)
 				{
-					$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search);
+					$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search, $lang);
 					if (strlen($results) > 10)
 					{
 						return $results;
@@ -101,7 +104,7 @@
 			return "No results found.";
 		}
 		
-		// This is so we can find the number of chapters in a book.
+		// This is so we can find the number of chapters in a book. Not currently used.
 		function getChapterCount($book)
 		{
 			global $servername;
@@ -121,9 +124,25 @@
 			
 			return $NumChapters;
 		}
+		
+		function validateNonEnglishBookParameter($param, $lang, $length)
+		{
+			if (mb_strlen($param) > $length && $lang != "English")
+			{
+				if ($lang == "ChineseSimplified")
+				{
+					die("书的名字是太大");
+				}
+				
+				else if ($lang == "ChineseTraditional")
+				{
+					die("書的名字是太大");
+				}
+			}
+		}
 
 
-		function queryDatabase($query, $parameters, $parameterType, $queryType, $searchQuery)
+		function queryDatabase($query, $parameters, $parameterType, $queryType, $searchQuery, $lang)
 		{
 			global $servername;
 			global $databasename;
@@ -133,64 +152,93 @@
 			$results = "";
 
 			$db = new mysqli($servername, $username, $password, $databasename);
-			$stmt = $db->prepare($query);
 			
-			$numChapters = 0;
+			$stmt;
+			
+			// So we can actually use UTF8 searches.
+			$db->set_charset("utf8");
+			
+			// Our queries work for all languages due to the way they're set up. We just need to change the table name. Let's do that.
+			if ($lang == "English")
+			{			
+				$stmt = $db->prepare($query);
+			}
+			else if ($lang == "ChineseSimplified") 
+			{
+				$stmt = $db->prepare(str_replace("`English`", "`ChineseSimplified`", $query));				
+			}
+			else if ($lang == "ChineseTraditional") 
+			{
+				$stmt = $db->prepare(str_replace("`English`", "`ChineseTraditional`", $query));								
+			}
+			else
+			{
+				die("Invalid Language specified.");
+			}
+			
 
 			switch ($queryType)
 			{
 				case 0: // bookChapterVerse
 				{
-					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii
-					$numChapters = 1;
+					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[($lang == "English") ? 2:3]); // sii
 				} break;
 				
 				case 1: // bookChapterVerseFromVerseTo
 				{
 					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
-					if ($parameters[2] > $parameters[3])
+					if ($parameters[2] > $parameters[3] && $lang == "English")
 					{
 						// Free up resources.
 						$stmt->free_result();
 						$stmt->close();
 						return "VerseTo can't be greater than VerseFrom.";
 					}
-					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2], $parameters[3]); // siii
-					$numChapters = 1;
-
+					
+					// Kills the PHP script if the parameters are too long.
+					validateNonEnglishBookParameter(parameters[0], $lang, 7);
+					
+					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[($lang == "English") ? 2:3], $parameters[($lang == "English") ? 3:5]); // siii
 				} break;
 				
 				case 2: // bookChapterFromChapterTo
 				{
 					// To can't be greater than From. Example: Genesis 2-1 is invalid. This does not allow you to search backwards.
-					if ($parameters[1] > $parameters[2])
+					if ($parameters[1] > $parameters[2]  && $lang == "English")
 					{
 						// Free up resources.
 						$stmt->free_result();
 						$stmt->close();
 						return "ChapterTo can't be greater than ChapterFrom.";
 					}
-					
-					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[2]); // sii	
-					$numChapters = 1;
+					// Kills the PHP script if the parameters are too long.
+					validateNonEnglishBookParameter(parameters[0], $lang, 7);
+
+					$stmt->bind_param($parameterType, $parameters[0], $parameters[1], $parameters[($lang == "English") ? 2:3]); // sii	
 				} break;
 				
 				case 3: // bookChapter
-				{
+				{					
+					// Kills the PHP script if the parameters are too long.
+					validateNonEnglishBookParameter(parameters[0], $lang, 7);
+
 					$stmt->bind_param($parameterType, $parameters[0], $parameters[1]); // si
-					$numChapters = 1;
 				} break;
 				
 				case 4: // Book
 				{
+					// Kills the PHP script if the parameters are too long.
+					validateNonEnglishBookParameter(parameters[0], $lang, 7);
+
 					$stmt->bind_param($parameterType, $parameters[0]); // s
-					$numChapters = 1;
 				} break;
 				case 5: // Non-book-based search. Allows searching words. 
 				{
-					$fixedParameter = "%" . $parameters[0] . "%";
+					// Kills the PHP script if the parameters are too long.
+					validateNonEnglishBookParameter(parameters[0], $lang, 20);
+
+					$fixedParameter = "%" . $parameters[($lang == "English") ? 0:1] . "%";
 					$stmt->bind_param($parameterType, $fixedParameter); // s
-					$numChapters = 0;
 				}break;
 				
 				default:
@@ -212,18 +260,16 @@
 
 			// Print results.
 			
-			$chapters = 0;
 			$lastChapter = 0;
 			$lastBook = "";
+			
+			$chapterWordNativeLanguage = ($lang == "English") ? "Chapter":"章节";
+			$resultsWordNativeLanguage = ($lang == "Results for") ? "Chapter":"搜索结果";
+			
 			
 			
 			if ($queryType != 5)
 			{
-				if ($numChapters > 0)
-				{
-					$chapters = getChapterCount($parameters[0]);				
-				}
-				
 				$results .= "<h1 style='text-align: center;'>" . htmlspecialchars($searchQuery) . "</h1>";
 				$results .= "<p><br/></p>";
 				
@@ -233,13 +279,12 @@
 					if ($Chapter != $lastChapter)
 					{
 						$results .= "<p><br/></p>";
-						$results .= "<h2>Chapter " . $Chapter . "</h2>";
+						$results .= "<h2>". $chapterWordNativeLanguage . " " . $Chapter . "</h2>";
 						$results .= "<hr/>";
 					}
 					$results .= "<strong>" . $Chapter . "</strong><em>:</em><strong>" . $Verse . "</strong> <em>-</em> " . $Word . " <br/><br/>";
 					$numResults++;
 					$lastChapter = $Chapter;
-
 				}
 			}
 			
@@ -253,7 +298,7 @@
 					if ($BookName != $lastBook)
 					{
 						$results .= "<p><br/></p>";
-						$results .= "<h2>Results from ". $BookName . "</h2>";
+						$results .= "<h2>". $resultsWordNativeLanguage . "  ". $BookName . "</h2>";
 						$results .= "<hr/>";						
 					}
 					$results .= "<em>" . $BookName . "</em> <strong>" . $Chapter . "</strong><em>:</em><strong>" . $Verse . "</strong> <em>-</em> " . str_replace($parameters[0], "<strong>".htmlentities($parameters[0])."</strong>", $Word) . " <br/><br/>";

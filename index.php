@@ -4,10 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Search the Bible</title>
-
-    <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/arkamis.css" rel="stylesheet">
 	<link rel="icon" type="image/png" href="img/Holy_Bible.png">
@@ -74,7 +71,7 @@
 	</div> 
 	<div class="wrap-no-background">
           <div class="col-lg-12 text-center v-center" id="">
-			  <div class="loading"></div>
+			  <div class="loading" style="text-align: center;"><img src="img/loading.gif" alt="Loading..." title="Blue spinning logo to indicate that the page is loading" width="46" height="46"/></div>
 			  <form id="search">
 				<div class="col-sm-12" id="searchResults" style="text-align: left">
 
