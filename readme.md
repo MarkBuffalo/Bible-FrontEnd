@@ -5,7 +5,10 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
  - Responsive design is now implemented.
  - Uses PHP / MySQL
  - Doesn't currently have pagination
- - Some verses are *missing* in Chinese. This does not mean they've been removed: rather, the removed verse and the previous verse have been combined. This is because, apparently, some of these sentences do not make sense on their own, and must be combined into a single sentence. As far as I know, the words are still intact and have their same meaning. When this occurs, they missing verse is shown as, "**見上節**". 
+ - Some verses are *missing* in Chinese. 
+  - This does not mean they've been removed: rather, the removed verse and the previous verse have been combined. This is because, apparently, some of these sentences do not make sense on their own, and must be combined into a single sentence. 
+  - As far as I know, the words are still intact and have their same meaning. 
+  - When this occurs, they missing verse is shown as, "**見上節**". This feature also helps to maintain backwards compability with English.
 
 ## English Example Queries: ##
 
