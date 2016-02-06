@@ -4,7 +4,7 @@ Currently only supports English, Simplified Chinese, and Traditional Chinese.
  - Responsive design is now implemented.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
- - Now supports cookies for saving language data.
+ - Now supports cookies for saving language preferences.
  - Now supports Traditional Chinese
  - Currently doesn't have Captcha.
  - Doesn't currently have pagination
