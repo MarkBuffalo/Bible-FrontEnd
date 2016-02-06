@@ -19,11 +19,11 @@
 		}
 		else if ($num == 1)
 		{
-			return "<h1 style='text-align: center;'>图书列表</h1>";
+			return "<h1 style='text-align: center;'>圣经目录</h1>";
 		}
 		else if ($num == 2)
 		{
-			return "<h1 style='text-align: center;'>圖書列表</h1>";
+			return "<h1 style='text-align: center;'>聖經目錄</h1>";
 		}
 		else 
 		{

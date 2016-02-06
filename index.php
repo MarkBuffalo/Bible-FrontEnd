@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<meta name="description" content="Free Bible Search">
+	<meta name="keywords" content="Bible,Search Bible,搜索聖經,搜索圣经">
+	<meta name="author" content="Mark Buffalo (Alias)">
+	
     <title>Free Bible Search Engine</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/arkamis.css" rel="stylesheet">
@@ -78,7 +83,8 @@
 				setLanguage("language", "#ChineseSimplified", 30);
 				$("#searchQueryInput").attr("placeholder", "例： 创世记 1:1-3");
 				$("#searchQueryInput").attr("title", "创世记 1:1-3");
-				$("#books").text("圣经书籍");
+				$("#searchQueryInput").val("");
+				$("#books").text("圣经目录");
 				$("#home").text("首页");
 				$("#about").text("关于");
 				$("#searchButton").text("搜索");
@@ -91,7 +97,8 @@
 				setLanguage("language", "#ChineseTraditional", 30);
 				$("#searchQueryInput").attr("placeholder", "例： 創世記 1:1-3");
 				$("#searchQueryInput").attr("title", "創世記 1:1-3");
-				$("#books").text("聖經書籍");
+				$("#searchQueryInput").val("");
+				$("#books").text("聖經目錄");
 				$("#home").text("首頁");
 				$("#about").text("關於");
 				$("#searchButton").text("搜索");
@@ -103,6 +110,7 @@
 				setLanguage("language", "#English", 30);
 				$("#searchQueryInput").attr("placeholder", "Example: Genesis 1:1-3");
 				$("#searchQueryInput").attr("title", "Genesis 1:1-3");
+				$("#searchQueryInput").val("");
 				$("#books").text("Books");
 				$("#home").text("Home");
 				$("#about").text("About");
@@ -221,7 +229,7 @@
 					<ul class="nav navbar-nav navbar-pills">
 						<li role="presentation"><a href="#" id="home">Home</a></li>
 						<li role="presentation" class="dropdown"><a href="#" id="books">Books</a></li>
-						<li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="languages"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （語文） <span class="caret"></span></a>
+						<li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="languages"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#" id="English">English (KJV)</a></li>
 								<li><a href="#" id="ChineseSimplified">简体中文</a></li>
