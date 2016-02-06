@@ -14,11 +14,12 @@
 
 	<script type="text/javascript">
 	
-	
 		$(document).ready(function()
 		{
 	
-			var query = "";			
+			var query = "";
+			var langVal;
+			
 			$(".loading").hide();
 			
 			
@@ -26,6 +27,9 @@
 			// Did the user submit the form in another way? Invoke ajax. 
 			$("form").submit(function (e) 
 			{
+				//prevent default form submission
+				e.preventDefault(); 
+
 				$(".loading").show();
 
 				
@@ -34,45 +38,43 @@
 				// It doesn't. Use the default query in the title based on the selected language to provide an example query.
 				else { query = $("#searchQueryInput").attr("title"); }
 				
-				//prevent default form submission
-				e.preventDefault(); 
-				
-				$.ajax({
-					url: 'classes/SearchResults.php',
-					type: 'get',
-					data: 
-					{ s: query },
-					success: function (data) {
-						$(".loading").hide();
-						$("#searchResults").html(data);
-					},
-					cache: false
-				});	
+				// Initiate Ajax Search to get our results
+				searchQueryAjax(query);
 			});
 			
 			// Did the user click the "Search" button? Invoke Ajax.
 			$("#searchButton").click(function (e) 
 			{
+				//prevent default page reloading annoyance
+				e.preventDefault(); 
+
 				if ($("#searchQueryInput").val() != "") { query = $("#searchQueryInput").val(); }
 				else { query = $("#searchQueryInput").attr("title"); }
 
 				$(".loading").show();
-				e.preventDefault(); //prevent default 
 				
-				$.ajax({
-					url: 'classes/SearchResults.php',
-					type: 'get',
-					data: { s: query },
-					success: function (data) {
-						$(".loading").hide();
-						$("#searchResults").html(data);
-					},
-					cache: false
-				});	
+				// Initiate Ajax Search to get our results
+				searchQueryAjax(query);
 			});
+			
+			$("#books").click(function (e)
+			{				
+				bookListQueryAjax(langVal);
+			});
+			
+			$("#home").click(function (e)
+			{
+				$(searchResults).html("");
+			});			
+			$("#brand").click(function (e)
+			{
+				$(searchResults).html("");
+			});			
+
 			
 			$("#ChineseSimplified").click(function (e) 
 			{
+				langVal = 1;
 				setLanguage("language", "#ChineseSimplified", 30);
 				$("#searchQueryInput").attr("placeholder", "例： 创世记 1:1-3");
 				$("#searchQueryInput").attr("title", "创世记 1:1-3");
@@ -85,6 +87,7 @@
 			
 			$("#ChineseTraditional").click(function (e) 
 			{
+				langVal = 2;
 				setLanguage("language", "#ChineseTraditional", 30);
 				$("#searchQueryInput").attr("placeholder", "例： 創世記 1:1-3");
 				$("#searchQueryInput").attr("title", "創世記 1:1-3");
@@ -96,6 +99,7 @@
 			});
 			$("#English").click(function (e) 
 			{
+				langVal = 0;
 				setLanguage("language", "#English", 30);
 				$("#searchQueryInput").attr("placeholder", "Example: Genesis 1:1-3");
 				$("#searchQueryInput").attr("title", "Genesis 1:1-3");
@@ -105,7 +109,59 @@
 				$("#searchButton").text("Search");
 				$("#search_header").text("Search the Bible");
 			});
+
+			
+			$(document).on('click', ".list-group-item", function() 
+			{
+				$("#searchQueryInput").val($(this).text());
+				$("#searchButton").click();
+			});
+			
 		});
+		
+		
+		// Will replace redundant code later.
+		function bookListQueryAjax(parameterValue)
+		{
+			$(".loading").show();
+				
+			$.ajax(
+			{
+				url: "classes/BookList.php",
+				type: 'GET',
+				data: { lang: parameterValue },
+				success: function (data) 
+				{
+					$(".loading").hide();
+					$("#searchResults").html(data);
+				},
+				cache: false
+			});	
+			return false;
+		}
+		
+		
+		function searchQueryAjax(parameterValue)
+		{
+			$(".loading").show();
+				
+			$.ajax(
+			{
+				url: "classes/SearchResults.php",
+				type: 'GET',
+				data: { s: parameterValue },
+				success: function (data) 
+				{
+					$(".loading").hide();
+					$("#searchResults").html(data);
+				},
+				cache: false
+			});	
+			return false;
+		}
+		
+		
+		
 		
 		<!-- example from w3schools; too lazy to write it by hand ;-b  -->
 		function setLanguage(cname, cvalue, exdays) 
@@ -157,12 +213,10 @@
 	</head>
   <body onload="checkLanguage()">
 	<div class="wrap">
-
-
 		<nav class="navbar navbar-default navbar-static-top" style="background-color: #3162a2; margin: 0 auto;">
 			<div class="container">
 				 <div class="navbar-header">
-					<a class="navbar-brand" href="#"><img alt="Brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
+					<a class="navbar-brand" href="#"><img alt="Brand" id="brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
 					
 					<ul class="nav navbar-nav navbar-pills">
 						<li role="presentation"><a href="#" id="home">Home</a></li>
@@ -170,8 +224,8 @@
 						<li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="languages"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （語文） <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#" id="English">English (KJV)</a></li>
-								<li><a href="#" id="ChineseSimplified">简体中文 （联合圣经）</a></li>
-								<li><a href="#" id="ChineseTraditional">繁體中文 （聯合聖經）</a></li>
+								<li><a href="#" id="ChineseSimplified">简体中文</a></li>
+								<li><a href="#" id="ChineseTraditional">繁體中文</a></li>
 							</ul>
 						</li>
 						<li role="presentation" class="dropdown"><a href="#" id="about">About</a></li>
@@ -198,11 +252,7 @@
 	<div class="wrap-no-background">
           <div class="col-lg-12 text-center v-center" id="">
 			  <div class="loading" style="text-align: center;"><img src="img/loading.gif" alt="Loading..." title="Blue spinning logo to indicate that the page is loading" width="46" height="46"/></div>
-			  <form id="search">
-				<div class="col-sm-12" id="searchResults" style="text-align: left">
-
-				</div>
-			  </form>
+			  <div class="col-sm-12" id="searchResults" style="text-align: left"></div>
         </div>
 	</div>
 

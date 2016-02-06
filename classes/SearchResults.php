@@ -1,6 +1,7 @@
 <?php
 	require_once("GlobalVariables.php");
 	require_once("DatabaseFunctions.php");
+	require_once("BookList.php");
 
 
 	if (isset($_GET['s']))

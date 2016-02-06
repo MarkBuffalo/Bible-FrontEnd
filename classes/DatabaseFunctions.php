@@ -103,9 +103,9 @@
 				}
 			}
 		}
+		
 		return "No results found.";
 	}
-	
 	// This is so we can find the number of chapters in a book. Not currently used.
 	function getChapterCount($book)
 	{
