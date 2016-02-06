@@ -15,23 +15,27 @@
 	<script type="text/javascript">
 	
 	
-		$(document).ready(function(){
+		$(document).ready(function()
+		{
 	
 			var query = "";			
 			$(".loading").hide();
 			
 			
+			
+			// Did the user submit the form in another way? Invoke ajax. 
 			$("form").submit(function (e) 
 			{
 				$(".loading").show();
 
 				
+				// Does our search query contain a string? 
 				if ($("#searchQueryInput").val() != "") { query = $("#searchQueryInput").val(); }
+				// It doesn't. Use the default query in the title based on the selected language to provide an example query.
 				else { query = $("#searchQueryInput").attr("title"); }
 				
-				e.preventDefault(); //prevent default form submit
-				
-				
+				//prevent default form submission
+				e.preventDefault(); 
 				
 				$.ajax({
 					url: 'classes/SearchResults.php',
@@ -46,6 +50,7 @@
 				});	
 			});
 			
+			// Did the user click the "Search" button? Invoke Ajax.
 			$("#searchButton").click(function (e) 
 			{
 				if ($("#searchQueryInput").val() != "") { query = $("#searchQueryInput").val(); }
@@ -170,6 +175,7 @@
 							</ul>
 						</li>
 						<li role="presentation" class="dropdown"><a href="#" id="about">About</a></li>
+					</ul>
 				</div>
 			</div>
 		</nav>
