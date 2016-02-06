@@ -84,7 +84,9 @@
 				}
 
 				// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
+
 				$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search, $lang);
+
 
 				// Found something
 				if (strlen($results) > 10)

@@ -5,6 +5,8 @@
 	$username = "";
 	$password = "";
 
+	
+	
 
 	require_once("DatabaseQueryObject.php");
 
@@ -127,13 +129,12 @@
 	array_push($dqo, new DatabaseQueryObject($bookChapterQuery, array(), "si", $regexChineseBookChapter, 3, "ChineseSimplified"));
 	array_push($dqo, new DatabaseQueryObject($bookQuery, array(), "s", $regexChineseBook, 4, "ChineseSimplified"));
 
-	/*
-		Currently excluding because \p{IsHan} is valid for both Simplified Chinese and Traditional Chinese.
+	// Traditional Chinese book search
 	array_push($dqo, new DatabaseQueryObject($bookChapterVerseQuery, array(), "sii", $regexChineseBookChapterVerse, 0, "ChineseTraditional"));
 	array_push($dqo, new DatabaseQueryObject($bookChapterVerseFromVerseToQuery, array(), "siii", $regexChineseBookChapterVerseFromVerseTo, 1, "ChineseTraditional"));
 	array_push($dqo, new DatabaseQueryObject($bookChapterFromToQuery, array(), "sii", $regexChineseBookChapterFromChapterTo, 2, "ChineseTraditional"));
 	array_push($dqo, new DatabaseQueryObject($bookChapterQuery, array(), "si", $regexChineseBookChapter, 3, "ChineseTraditional"));
-	array_push($dqo, new DatabaseQueryObject($bookQuery, array(), "s", $regexChineseBook, 4, "ChineseTraditional"));*/
+	array_push($dqo, new DatabaseQueryObject($bookQuery, array(), "s", $regexChineseBook, 4, "ChineseTraditional"));
 
 
 ?>
