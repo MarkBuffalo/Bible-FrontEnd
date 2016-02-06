@@ -22,6 +22,7 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
 
  - **Book Searches**
   - Genesis 
+  - Genesis 1:1
   - Genesis 1-2
   - Genesis 1:1-3
  - **Keyword searches**
@@ -35,6 +36,7 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
 
  - **Book Searches**
   - 创世记 
+  - 创世记 1:1
   - 创世记 1-2
   - 创世记 1:1-3
  - **Keyword searches**
