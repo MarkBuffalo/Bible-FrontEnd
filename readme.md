@@ -1,7 +1,7 @@
 Currently only supports English and Simplified Chinese. Traditional Chinese will be added next.
 
 **Notes**:
-
+ - A supermassive fail has occured on the Simplified Chinese table; I forgot I can read Traditional Chinese, and thought nothing of inserting it. A fix is underway.
  - Responsive design is now implemented.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
