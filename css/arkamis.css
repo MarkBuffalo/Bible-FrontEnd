@@ -81,3 +81,13 @@ em
 	font-style: normal;
 	font-weight: bold;
 }
+
+ul.nav.navbar-nav.navbar-pills > li > a
+{
+	color: #eee;
+	font-size: 14pt;
+}
+ul.nav.navbar-nav.navbar-pills > li > a:hover
+{
+	color: #8cb9f2;
+}

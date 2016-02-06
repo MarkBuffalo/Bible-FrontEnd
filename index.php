@@ -55,6 +55,11 @@
   <body>
 	<div class="wrap">
 		<div class="row">
+			<ul>
+				<li>Home</li>
+			</ul>
+		</div>
+		<div class="row">
 			<div class="col-lg-12 text-center v-center">
 				<img src="img/Holy_Bible.png" width="128" height="128" alt="Holy Bible" title="A light green, 2D picture of the Bible"/>
 				<h1>Search the Bible</h1>
