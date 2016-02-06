@@ -265,8 +265,23 @@
 		$lastChapter = 0;
 		$lastBook = "";
 		
-		$chapterWordNativeLanguage = ($lang == "English") ? "Chapter":"章节";
-		$resultsWordNativeLanguage = ($lang == "English") ? "Results for":"搜索结果";
+		
+		// Set the appropriate result formatting so as not to confuse anyone.
+		if ($lang == "English") 
+		{ 
+			$chapterWordNativeLanguage = "Chapter"; 
+			$resultsWordNativeLanguage = "Results for";
+		}
+		else if ($lang == "ChineseSimplified") 
+		{ 
+			$chapterWordNativeLanguage = "章节";
+			$resultsWordNativeLanguage = "搜索结果";
+		}
+		else if ($lang == "ChineseTraditional") 
+		{ 
+			$chapterWordNativeLanguage = "章節";
+			$resultsWordNativeLanguage = "搜索結果";
+		}
 		
 		
 		
