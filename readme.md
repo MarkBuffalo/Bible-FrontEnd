@@ -29,7 +29,7 @@ Currently only supports English, Simplified Chinese, and Traditional Chinese.
   - Genesis 1:1
   - Genesis 1-2
   - Genesis 1:1-3
- - **Keyword searches**
+ - **Example Keyword searches**
   - love 
   - oppress
   - hate
@@ -43,7 +43,7 @@ Currently only supports English, Simplified Chinese, and Traditional Chinese.
   - 创世记 1:1
   - 创世记 1-2
   - 创世记 1:1-3
- - **Keyword searches**
+ - **Example Keyword searches**
   - Not yet implemented
 
 ## Traditional Chinese Example Queries: ##
@@ -52,7 +52,7 @@ Currently only supports English, Simplified Chinese, and Traditional Chinese.
   - 創世記 1:1
   - 創世記 1-2
   - 創世記 1:1-3
- - **Keyword searches**
+ - **Example Keyword searches**
   - Not yet implemented
 
 ## Full Simplified Chinese Book List (Chronological Order) ##
