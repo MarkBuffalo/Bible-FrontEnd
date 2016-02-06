@@ -1,7 +1,6 @@
 Currently only supports English and Simplified Chinese. Traditional Chinese will be added next.
 
 **Notes**:
- - A supermassive fail has occured on the Simplified Chinese table; I forgot I can read Traditional Chinese, and thought nothing of inserting it. A fix is underway.
  - Responsive design is now implemented.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
@@ -15,7 +14,7 @@ Currently only supports English and Simplified Chinese. Traditional Chinese will
  - Some verses are *missing* in Chinese. 
   - **This does not mean they've been removed**: rather, the removed verse and the previous verse have been combined. This is because, apparently, some of these verses do not make sense on their own, and must be combined into a single verse. 
   - As far as I know, the words are still intact and have their same meaning. 
-  - When this occurs, the missing verse is shown as, "**見上節**" in Traditional Chinese, and "**见上节**" in Simplified Chinese. 
+  - When this occurs, the missing verse is shown as, "**見上節**" in Traditional Chinese, and as " " (empty space) in Simplified Chinese. 
   - This feature also helps to maintain backwards compability with English searches and processing, without needing lots of extra code.
 - You do not need to change your language to search either English or Chinese. You may perform a search using either language, and it will be recognized.
 
