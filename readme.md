@@ -1,7 +1,7 @@
 Currently only supports English, Simplified Chinese, and Traditional Chinese.
 
 **Notes**:
- - Responsive design is now implemented, but is very poorly designed, breaks often, and needs a complete overhaul.
+ - Responsive design is broken. Very poorly designed, and breaks easily. Needs a complete overhaul.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
  - Now supports cookies for saving language preferences.
