@@ -1,6 +1,7 @@
 Currently only supports English, Simplified Chinese, and Traditional Chinese.
 
 **Notes**:
+ - **Requires** the `Bible-Generator` project: https://github.com/MarkBuffalo/Bible-Generator
  - Responsive design is now implemented. Again. May require additional testing.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
