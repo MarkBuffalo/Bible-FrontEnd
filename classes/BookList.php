@@ -62,13 +62,13 @@
 		$results .= "<div class=\"container\">";
 		$results .= checkBookList($lang) . "<p><br/></p>";
 		$results .= "<div class=\"row\">";
-		$results .= "<div class=\"col-md-4\" style=\"text-align: center;\">";
+		$results .= "<div class=\"col-md-4\" style=\"text-align: center; margin-top: 21px;\">";
 		while ($row = $result->fetch_assoc())
 		{
 			if ($numResults % 22 == 0 && $numResults != 0)
 			{
 				$results .= "</div>\r\n";
-				$results .= "<div class=\"col-md-4\" style=\"text-align: center;\">";
+				$results .= "<div class=\"col-md-4\" style=\"text-align: center; margin-top: 21px;\">";
 				$results .= "\t<a href=\"#\" class=\"list-group-item\">". $row["Book"] . "</a>\r\n";
 			}
 			else
