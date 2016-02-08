@@ -61,14 +61,14 @@
 		
 		$results .= "<div class=\"container\">";
 		$results .= checkBookList($lang) . "<p><br/></p>";
-		
-		$results .= "<div class=\"list-group\" style=\"float: left; width: 33%; margin: 0 auto; text-align: center;\">";
+		$results .= "<div class=\"row\">";
+		$results .= "<div class=\"col-md-4\" style=\"text-align: center;\">";
 		while ($row = $result->fetch_assoc())
 		{
 			if ($numResults % 22 == 0 && $numResults != 0)
 			{
 				$results .= "</div>\r\n";
-				$results .= "<div class=\"list-group\" style=\"float: left; width: 33%; margin: 0 auto; margin-left: 4px; text-align: center;\">";
+				$results .= "<div class=\"col-md-4\" style=\"text-align: center;\">";
 				$results .= "\t<a href=\"#\" class=\"list-group-item\">". $row["Book"] . "</a>\r\n";
 			}
 			else
@@ -77,7 +77,8 @@
 			}
 			$numResults++;
 		}
-		$results .= "</div></div>\r\n";
+		$results .= "</div></div></div>\r\n";
+		$results .= "<p style=\"padding-top: 25px;\">&nbsp;</p>";
 		
 		$result->free_result();
 		$db->close();

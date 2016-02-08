@@ -220,43 +220,54 @@
 
 	</head>
   <body onload="checkLanguage()">
-	<div class="wrap">
-		<nav class="navbar navbar-default navbar-static-top" style="background-color: #3162a2; margin: 0 auto;">
-			<div class="container">
-				 <div class="navbar-header">
-					<a class="navbar-brand" href="#"><img alt="Brand" id="brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
-					
-					<ul class="nav navbar-nav navbar-pills">
-						<li role="presentation"><a href="#" id="home">Home</a></li>
-						<li role="presentation" class="dropdown"><a href="#" id="books">Books</a></li>
-						<li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="languages"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
+  
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><img alt="Brand" id="brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#" id="home">Home</a></li>
+					<li><a href="#about" id="books">Books</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#" id="English">English (KJV)</a></li>
 								<li><a href="#" id="ChineseSimplified">简体中文</a></li>
 								<li><a href="#" id="ChineseTraditional">繁體中文</a></li>
 							</ul>
-						</li>
-						<li role="presentation" class="dropdown"><a href="#" id="about">About</a></li>
-					</ul>
+					</li>
+					<li role="presentation" class="dropdown"><a href="#" id="about">About</a></li>
+			  </ul>
+			  <ul class="nav navbar-nav navbar-right">
+				<li><a href="https://github.com/MarkBuffalo/Bible-FrontEnd" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;GitHub</a></li>
+			  </ul>
+			</div><!--/.nav-collapse -->
+		</div>
+    </nav>
+  
+  
+    <div class="container-fluid">
+      <!-- Main component for a primary marketing message or call to action -->
+		<div class="col-lg-12 text-center v-center">
+			<img src="img/Holy_Bible.png" width="128" height="128" alt="Holy Bible" title="A light green, 2D picture of the Bible"/>
+			<h1 id="search_header">Search the Bible</h1>
+			
+			<form>
+				<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+					<input type="text" class="center-block form-control input-lg" id="searchQueryInput" title="Example: Genesis 1:1-3" placeholder="Example: Genesis 1:1-3"/>
+					<span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button" id="searchButton">Search</button></span>
 				</div>
-			</div>
-		</nav>
-	
-		<div class="row">
-			<div class="col-lg-12 text-center v-center">
-				<img src="img/Holy_Bible.png" width="128" height="128" alt="Holy Bible" title="A light green, 2D picture of the Bible"/>
-				<h1 id="search_header">Search the Bible</h1>
-
-				<br/>
-				<form class="col-lg-12">
-					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-						<input type="text" class="center-block form-control input-lg" id="searchQueryInput" title="Example: Genesis 1:1-3" placeholder="Example: Genesis 1:1-3"/>
-						<span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button" id="searchButton">Search</button></span>
-					</div>
-				</form>
-			</div>
-		</div> 
-	</div> 
+			</form>
+		</div>
+    </div>
 	<div class="wrap-no-background">
           <div class="col-lg-12 text-center v-center" id="">
 			  <div class="loading" style="text-align: center;"><img src="img/loading.gif" alt="Loading..." title="Blue spinning logo to indicate that the page is loading" width="46" height="46"/></div>
