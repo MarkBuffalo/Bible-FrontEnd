@@ -297,12 +297,13 @@
 				{
 					$results .= "<p><br/></p>";
 					$results .= "<h2>". $chapterWordNativeLanguage . " " . $Chapter . "</h2>";
-					$results .= "<hr/>";
+					$results .= "<hr/><p>";
 				}
 				$results .= "<strong>" . $Chapter . "</strong><em>:</em><strong>" . $Verse . "</strong> <em>-</em> " . $Word . " <br/><br/>";
 				$numResults++;
 				$lastChapter = $Chapter;
 			}
+			$results .= "</p>";
 		}
 		
 		// Query contains user-defined search. Must sanitize output. If attacker somehow gets past validation, this is the last line of defense.
