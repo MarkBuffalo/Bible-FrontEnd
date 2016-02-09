@@ -6,7 +6,7 @@
 	$bookQuery = "SELECT DISTINCT Book from `English`";
 	
 	
-	if (isset($_GET['lang']) && is_numeric($_GET['lang']))
+	if (isset($_GET['lang']) && is_numeric($_GET['lang']) && strlen($_GET['lang']) < 2)
 	{
 		echo getBookList($_GET['lang']);
 	}
