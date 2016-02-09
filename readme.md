@@ -7,7 +7,8 @@ Currently only supports English, Simplified Chinese, and Traditional Chinese.
 - Chinese (Simplified)
 - Chinese (Traditional)
 
-**Notes**:
+---------------------
+## Important Notes ##
  - **Requires** the `Bible-Generator` project: https://github.com/MarkBuffalo/Bible-Generator
  - Responsive design is now implemented. Seems to be working great. New skill acquired.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
