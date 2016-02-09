@@ -19,11 +19,14 @@
 
 	<script type="text/javascript">
 	
+
+		var langVal;
+	
+	
 		$(document).ready(function()
 		{
 	
 			var query = "";
-			var langVal;
 			
 			$(".loading").hide();
 			
@@ -35,11 +38,12 @@
 				//prevent default form submission
 				e.preventDefault(); 
 
+				// Show the loading .gif
 				$(".loading").show();
 
-				
 				// Does our search query contain a string? 
 				if ($("#searchQueryInput").val() != "") { query = $("#searchQueryInput").val(); }
+				
 				// It doesn't. Use the default query in the title based on the selected language to provide an example query.
 				else { query = $("#searchQueryInput").attr("title"); }
 				
@@ -53,75 +57,69 @@
 				//prevent default page reloading annoyance
 				e.preventDefault(); 
 
+				// Make sure the input isn't null
 				if ($("#searchQueryInput").val() != "") { query = $("#searchQueryInput").val(); }
+
+				// It doesn't. Use the default query in the title based on the selected language to provide an example query.
 				else { query = $("#searchQueryInput").attr("title"); }
 
+				// Show loading .gif
 				$(".loading").show();
 				
 				// Initiate Ajax Search to get our results
 				searchQueryAjax(query);
 			});
 			
+			// For when the user clicks the "Books" navbar item.
 			$("#books").click(function (e)
-			{				
+			{
+				// Request book data from PHP
 				bookListQueryAjax(langVal);
 			});
 			
+			
+			// For when the user clicks the "Home"  navbar item.
 			$("#home").click(function (e)
 			{
+				// Clear the results.
 				$(searchResults).html("");
-			});			
+			});
+			
+			// For when the user clicks the site logo.
 			$("#brand").click(function (e)
 			{
+				// Clear results.
 				$(searchResults).html("");
 			});			
-
 			
-			$("#ChineseSimplified").click(function (e) 
-			{
-				langVal = 1;
-				setLanguage("language", "#ChineseSimplified", 30);
-				$("#searchQueryInput").attr("placeholder", "例： 创世记 1:1-3");
-				$("#searchQueryInput").attr("title", "创世记 1:1-3");
-				$("#searchQueryInput").val("");
-				$("#books").text("圣经目录");
-				$("#home").text("首页");
-				$("#about").text("关于");
-				$("#searchButton").text("搜索");
-				$("#search_header").text("搜索圣经");
-			});
-			
-			$("#ChineseTraditional").click(function (e) 
-			{
-				langVal = 2;
-				setLanguage("language", "#ChineseTraditional", 30);
-				$("#searchQueryInput").attr("placeholder", "例： 創世記 1:1-3");
-				$("#searchQueryInput").attr("title", "創世記 1:1-3");
-				$("#searchQueryInput").val("");
-				$("#books").text("聖經目錄");
-				$("#home").text("首頁");
-				$("#about").text("關於");
-				$("#searchButton").text("搜索");
-				$("#search_header").text("搜索聖經");
-			});
-			$("#English").click(function (e) 
-			{
-				langVal = 0;
-				setLanguage("language", "#English", 30);
-				$("#searchQueryInput").attr("placeholder", "Example: Genesis 1:1-3");
-				$("#searchQueryInput").attr("title", "Genesis 1:1-3");
-				$("#searchQueryInput").val("");
-				$("#books").text("Books");
-				$("#home").text("Home");
-				$("#about").text("About");
-				$("#searchButton").text("Search");
-				$("#search_header").text("Search the Bible");
+			// Whenever a navbar menu is clicked...
+			$('.close-menu').on('click', function()
+			{ 
+				// Is the navbar menu visible? Nope!
+				if ($('.navbar-toggle').css('display') != 'none')
+				{
+					// Toggle the navbar menu without glitching.
+					$(".navbar-toggle").trigger( "click" );
+				}
 			});
 
+
+			// Clicked Simplified Chinese. Load Simplified Chinese text.
+			$("#ChineseSimplified").click(function (e) { setChineseSimplified(); });
+
+			// Clicked Traditional Chinese. Load Traditional Chinese text.
+			$("#ChineseTraditional").click(function (e) { setChineseTraditional(); });
+
+			// Clicked English. Load English text.
+			$("#English").click(function (e) { setEnglish(); });
+
 			
+			// When the user clicks the book list...
 			$(document).on('click', ".list-group-item", function() 
 			{
+				// Set the value of the input box to the book name...
 				$("#searchQueryInput").val($(this).text());
+				// And submit/click the form.
 				$("#searchButton").click();
 			});
 			
@@ -168,6 +166,50 @@
 			return false;
 		}
 		
+		function setEnglish()
+		{
+			langVal = 0;
+			
+			setLanguage("language", "#English", 30);
+			$("#searchQueryInput").attr("placeholder", "Example: Genesis 1:1-3");
+			$("#searchQueryInput").attr("title", "Genesis 1:1-3");
+			$("#searchQueryInput").val("");
+			$("#books").text("Books");
+			$("#home").text("Home");
+			$("#about").text("About");
+			$("#searchButton").text("Search");
+			$("#search_header").text("Search the Bible");
+		}
+		
+		function setChineseTraditional()
+		{
+			langVal = 2;
+			
+			setLanguage("language", "#ChineseTraditional", 30);
+			$("#searchQueryInput").attr("placeholder", "例： 創世記 1:1-3");
+			$("#searchQueryInput").attr("title", "創世記 1:1-3");
+			$("#searchQueryInput").val("");
+			$("#books").text("聖經目錄");
+			$("#home").text("首頁");
+			$("#about").text("關於");
+			$("#searchButton").text("搜索");
+			$("#search_header").text("搜索聖經");
+		}
+		
+		function setChineseSimplified()
+		{
+			langVal = 1;
+			setLanguage("language", "#ChineseSimplified", 30);
+			$("#searchQueryInput").attr("placeholder", "例： 创世记 1:1-3");
+			$("#searchQueryInput").attr("title", "创世记 1:1-3");
+			$("#searchQueryInput").val("");
+			$("#books").text("圣经目录");
+			$("#home").text("首页");
+			$("#about").text("关于");
+			$("#searchButton").text("搜索");
+			$("#search_header").text("搜索圣经");
+		}
+		
 		
 		
 		
@@ -202,7 +244,9 @@
 			var lang = getLanguage("language");
 			if (lang != "") 
 			{
-				$(lang).click();
+				if (lang == "#English") { setEnglish(); }
+				else if (lang == "#ChineseSimplified") { setChineseSimplified(); }
+				else if (lang == "#ChineseTraditional") { setChineseTraditional(); }
 			} 
 			else 
 			{
@@ -234,17 +278,17 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#" id="home">Home</a></li>
-					<li><a href="#about" id="books">Books</a></li>
+					<li><a class="close-menu" href="#" id="home">Home</a></li>
+					<li><a class="close-menu" href="#" id="books">Books</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="#" id="English">English (KJV)</a></li>
-								<li><a href="#" id="ChineseSimplified">简体中文</a></li>
-								<li><a href="#" id="ChineseTraditional">繁體中文</a></li>
+								<li><a href="#" class="close-menu" id="English">English (KJV)</a></li>
+								<li><a href="#" class="close-menu" id="ChineseSimplified">简体中文</a></li>
+								<li><a href="#" class="close-menu" id="ChineseTraditional">繁體中文</a></li>
 							</ul>
 					</li>
-					<li role="presentation" class="dropdown"><a href="#" id="about">About</a></li>
+					<li role="presentation" class="dropdown close-menu"><a href="#" id="about">About</a></li>
 			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<li><a href="https://github.com/MarkBuffalo/Bible-FrontEnd" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;GitHub</a></li>
