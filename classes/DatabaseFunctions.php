@@ -9,99 +9,106 @@
 	// This is where we determine whether or not the query is valid before sending it to the database.
 	function checkSearchType($search)
 	{
-		global $dqo;
-		
-		foreach ($dqo as $d)
+		if (isset($search) && mb_strlen($search) < 250)
 		{
-			// Our DatabaseQueryObject properties
-			$query = $d->query;
-			$parameters = $d->parameters;
-			$parameterTypes = $d->parameterTypes;
-			$regex = $d->regex;
-			$queryType = $d->queryType;
-			$lang = $d->lang;
+			global $dqo;
 			
-			// Is it one of our valid queries, and *NOT* a keyword search?
-			if ($queryType != 5 && preg_match($regex, $search))
+			foreach ($dqo as $d)
 			{
-				// We've got a match. Split the query into an array based on regex capture groups.
-				$contents = getPregSplitArray($regex, $search);
+				// Our DatabaseQueryObject properties
+				$query = $d->query;
+				$parameters = $d->parameters;
+				$parameterTypes = $d->parameterTypes;
+				$regex = $d->regex;
+				$queryType = $d->queryType;
+				$lang = $d->lang;
 				
-
-				// How big is our array?
-				$conCount = count($contents);
-
-				// This is where we'll put the temporary parameters once we've removed the empty ones.
-				$tmpParameters = array();
-
-				// Remove bad elements and insert into new array, $parameters.
-				for ($i = 0; $i < $conCount; $i++)
+				// Is it one of our valid queries, and *NOT* a keyword search?
+				if ($queryType != 5 && preg_match($regex, $search))
 				{
-					// If it's not the first or last option (both of which are empty when using preg_split()), add it to the parameter list.
-					if ($i != 0 && $i != ($conCount - 1))
+					// We've got a match. Split the query into an array based on regex capture groups.
+					$contents = getPregSplitArray($regex, $search);
+					
+
+					// How big is our array?
+					$conCount = count($contents);
+
+					// This is where we'll put the temporary parameters once we've removed the empty ones.
+					$tmpParameters = array();
+
+					// Remove bad elements and insert into new array, $parameters.
+					for ($i = 0; $i < $conCount; $i++)
 					{
-						//echo "Index: [" . $i . "] value: " . $contents[$i] . "<br/>"; Great. Chinese is correct.
-						array_push($tmpParameters, $contents[$i]);
-					}
-				}
-
-				// This query was for Song of Solomon. Combine tmpParameters[0], tmpParameters[1], and tmpParameters[2] to create a single book.
-				if (strtolower($tmpParameters[0]) == "song")
-				{
-					// Combine the full book name.
-					$bookName = $tmpParameters[0] . " " . $tmpParameters[1] . " " . $tmpParameters[2];
-
-					array_push($parameters, $bookName);
-
-					for ($j = 0; $j < count($tmpParameters); $j++)
-					{
-						// Make sure we skip the book name. We already combined that.
-						if ($j != 0 && $j != 1 && $j != 2)
+						// If it's not the first or last option (both of which are empty when using preg_split()), add it to the parameter list.
+						if ($i != 0 && $i != ($conCount - 1))
 						{
-							array_push($parameters, $tmpParameters[$j]);
+							//echo "Index: [" . $i . "] value: " . $contents[$i] . "<br/>"; Great. Chinese is correct.
+							array_push($tmpParameters, $contents[$i]);
 						}
 					}
-				} // Found a number book. Example: 2 Peter. Combine tmpParameters[0] and tmpParameters[1].
-				else if (is_numeric($tmpParameters[0]))
-				{
-					// Combine the full book name.
-					$bookName = $tmpParameters[0] . " " . $tmpParameters[1];
 
-					array_push($parameters, $bookName);
-
-					for ($j = 0; $j < count($tmpParameters); $j++)
+					// This query was for Song of Solomon. Combine tmpParameters[0], tmpParameters[1], and tmpParameters[2] to create a single book.
+					if (strtolower($tmpParameters[0]) == "song")
 					{
-						// Make sure we skip the book name. We already combined that.
-						if ($j != 0 && $j != 1)
+						// Combine the full book name.
+						$bookName = $tmpParameters[0] . " " . $tmpParameters[1] . " " . $tmpParameters[2];
+
+						array_push($parameters, $bookName);
+
+						for ($j = 0; $j < count($tmpParameters); $j++)
 						{
-							array_push($parameters, $tmpParameters[$j]);
+							// Make sure we skip the book name. We already combined that.
+							if ($j != 0 && $j != 1 && $j != 2)
+							{
+								array_push($parameters, $tmpParameters[$j]);
+							}
 						}
+					} // Found a number book. Example: 2 Peter. Combine tmpParameters[0] and tmpParameters[1].
+					else if (is_numeric($tmpParameters[0]))
+					{
+						// Combine the full book name.
+						$bookName = $tmpParameters[0] . " " . $tmpParameters[1];
+
+						array_push($parameters, $bookName);
+
+						for ($j = 0; $j < count($tmpParameters); $j++)
+						{
+							// Make sure we skip the book name. We already combined that.
+							if ($j != 0 && $j != 1)
+							{
+								array_push($parameters, $tmpParameters[$j]);
+							}
+						}
+					} // Book without multiple accompanying books. Example: Genesis.
+					else if (is_string($tmpParameters[0]))
+					{
+						$parameters = $tmpParameters;
 					}
-				} // Book without multiple accompanying books. Example: Genesis.
-				else if (is_string($tmpParameters[0]))
-				{
-					$parameters = $tmpParameters;
+
+					// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
+
+					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search, $lang);
+
+
+					// Found something
+					if (strlen($results) > 10)
+					{
+						return $results;
+					}
 				}
-
-				// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
-
-				$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search, $lang);
-
-
-				// Found something
-				if (strlen($results) > 10)
+				else if (preg_match($regex, $search) && $queryType == 5)
 				{
-					return $results;
-				}
-			}
-			else if (preg_match($regex, $search) && $queryType == 5)
-			{
-				$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search, $lang);
-				if (strlen($results) > 10)
-				{
-					return $results;
+					$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search, $lang);
+					if (strlen($results) > 10)
+					{
+						return $results;
+					}
 				}
 			}
+		}
+		else
+		{
+			return "No results found.";
 		}
 		
 		return "No results found.";
