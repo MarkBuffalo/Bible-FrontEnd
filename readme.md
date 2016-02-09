@@ -1,14 +1,19 @@
 Currently only supports English, Simplified Chinese, and Traditional Chinese.
 
+---------------------
+## Language Support ##
+
+- English (KJV)
+- Chinese (Simplified)
+- Chinese (Traditional)
+
 **Notes**:
  - **Requires** the `Bible-Generator` project: https://github.com/MarkBuffalo/Bible-Generator
  - Responsive design is now implemented. Seems to be working great. New skill acquired.
  - Uses PHP / MySQL / HTML5 / CSS3 / jQuery / jQueryUI / Javascript
  - Now has language-changing jQuery code 
  - Now supports cookies for saving language preferences.
- - Now supports Traditional Chinese
  - Doesn't currently use Captcha.
- - Book list has been added for all languages.
  - Page "About" is not active at this time. Will add later.
  - Doesn't currently have pagination
  - Doesn't currently have *proper* localization. While it works correctly, it's hideously inefficient and doesn't scale. Will fix later.
