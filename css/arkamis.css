@@ -148,3 +148,34 @@ ul.nav.navbar-nav.navbar-pills > li > a:hover
 	background-color: #24aa98;
 	color: #ffffff;
 }
+
+.navbar-header, .container > .navbar-collapse
+{
+	border-bottom: solid 1px #234e86;
+}
+
+.navbar-default .navbar-toggle
+{
+	border: solid 1px #65abd0;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover
+{
+	background-color: #db7560;
+	color: #ffffff;
+}
+
+
+
+
+@media screen and (max-width: 768px) 
+{
+    .container-fluid h1
+	{
+        font-size:28pt;
+    }
+	.input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn
+	{
+		font-size: 10pt;
+	}
+}
