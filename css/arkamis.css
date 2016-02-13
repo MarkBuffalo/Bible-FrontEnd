@@ -3,10 +3,36 @@
 
 html, body 
 {
-  height: 100%;
+  min-height: 100%;
   font-family: 'Antic Slab', serif;
   font-size: 12pt;
 }
+body
+{
+	margin-bottom: 50px;
+}
+
+.wrap 
+{
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px;
+}
+.footer, .push 
+{
+    height: 50px;
+}
+
+
+
+
+footer > .container > p
+{
+	margin-top: 12px;
+	text-align: center;
+}
+
 
 .container-fluid h1 
 {
@@ -148,6 +174,13 @@ ul.nav.navbar-nav.navbar-pills > li > a:hover
 	background-color: #24aa98;
 	color: #ffffff;
 }
+
+.col-md-4 .list-group-item
+{
+	background-color: #f2f5f8;
+	color: #555;
+}
+
 
 .navbar-header, .container > .navbar-collapse
 {

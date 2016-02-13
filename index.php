@@ -22,60 +22,69 @@
 	</head>
   <body onload="checkLanguage()">
   
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#"><img alt="Brand" id="brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a class="close-menu" href="#" id="home">Home</a></li>
-					<li><a class="close-menu" href="#" id="books">Books</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#" class="close-menu" id="English">English (KJV)</a></li>
-								<li><a href="#" class="close-menu" id="ChineseSimplified">简体中文</a></li>
-								<li><a href="#" class="close-menu" id="ChineseTraditional">繁體中文</a></li>
-							</ul>
-					</li>
-					<li role="presentation" class="dropdown close-menu"><a href="#" id="about">About</a></li>
-			  </ul>
-			  <ul class="nav navbar-nav navbar-right">
-				<li><a href="https://github.com/MarkBuffalo/Bible-FrontEnd" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;GitHub</a></li>
-			  </ul>
-			</div><!--/.nav-collapse -->
-		</div>
-    </nav>
-  
-  
-    <div class="container-fluid">
-      <!-- Main component for a primary marketing message or call to action -->
-		<div class="col-lg-12 text-center v-center">
-			<img src="img/Holy_Bible.png" width="128" height="128" alt="Holy Bible" title="A light green, 2D picture of the Bible"/>
-			<h1 id="search_header">Search the Bible</h1>
-			
-			<form>
-				<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-					<input type="text" class="center-block form-control input-lg" id="searchQueryInput" title="Example: Genesis 1:1-3" placeholder="Example: Genesis 1:1-3"/>
-					<span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button" id="searchButton">Search</button></span>
+	<div class="wrap">
+		<a name="top"></a>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#"><img alt="Brand" id="brand" src="img/arkamis_logo.png" width="35" height="24"/></a>
 				</div>
-			</form>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a class="close-menu" href="#" id="home">Home</a></li>
+						<li><a class="close-menu" href="#" id="books">Books</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;Language （语言） <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#" class="close-menu" id="English">English (KJV)</a></li>
+									<li><a href="#" class="close-menu" id="ChineseSimplified">简体中文</a></li>
+									<li><a href="#" class="close-menu" id="ChineseTraditional">繁體中文</a></li>
+								</ul>
+						</li>
+						<li role="presentation" class="dropdown close-menu"><a href="#" id="about">About</a></li>
+				  </ul>
+				  <ul class="nav navbar-nav navbar-right">
+					<li><a href="https://github.com/MarkBuffalo/Bible-FrontEnd" target="_blank"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;GitHub</a></li>
+				  </ul>
+				</div>
+			</div>
+		</nav>
+	  
+	  
+		<div class="container-fluid">
+			<div class="col-lg-12 text-center v-center">
+				<img src="img/Holy_Bible.png" width="128" height="128" alt="Holy Bible" title="A light green, 2D picture of the Bible"/>
+				<h1 id="search_header">Search the Bible</h1>
+				
+				<form>
+					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+						<input type="text" class="center-block form-control input-lg" id="searchQueryInput" title="Example: Genesis 1:1-3" placeholder="Example: Genesis 1:1-3"/>
+						<span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button" id="searchButton">Search</button></span>
+					</div>
+				</form>
+			</div>
 		</div>
-    </div>
-	<div class="wrap-no-background">
-          <div class="col-lg-12 text-center v-center" id="">
-			  <div class="loading" style="text-align: center;"><img src="img/loading.gif" alt="Loading..." title="Blue spinning logo to indicate that the page is loading" width="46" height="46"/></div>
-			  <div class="col-sm-12" id="searchResults" style="text-align: left"></div>
-        </div>
+		<div class="wrap-no-background">
+			  <div class="col-lg-12 text-center v-center" id="">
+				  <div class="loading" style="text-align: center;"><img src="img/loading.gif" alt="Loading..." title="Blue spinning logo to indicate that the page is loading" width="46" height="46"/></div>
+				  <div class="col-sm-12" id="searchResults" style="text-align: left"></div>
+			</div>
+		</div>
+		<div class="push"></div>
 	</div>
 
+
+	<footer class="footer">
+      <div class="container">
+        <p><a href="#top">Return to top</a></p>
+      </div>
+    </footer>
 
 
     <script src="jquery-1.12.0.min.js"></script>

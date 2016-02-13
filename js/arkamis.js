@@ -8,6 +8,8 @@
 			$(".loading").hide();
 			
 			
+
+			
 			
 			// Did the user submit the form in another way? Invoke ajax. 
 			$("form").submit(function (e) 
@@ -123,7 +125,6 @@
 			return false;
 		}
 		
-		
 		function searchQueryAjax(parameterValue)
 		{
 			$(".loading").show();
@@ -187,10 +188,8 @@
 			$("#search_header").text("搜索圣经");
 		}
 		
-		
-		
-		
-		<!-- example from w3schools; too lazy to write it by hand ;-b  -->
+	
+		// example from w3schools; too lazy to write it by hand ;-b 
 		function setLanguage(cname, cvalue, exdays) 
 		{
 			var d = new Date();
