@@ -34,6 +34,12 @@ footer > .container > p
 	text-align: center;
 }
 
+footer > .container > p > a
+{
+	color: #db7560;
+	font-size: 12pt;
+}
+
 
 .container-fluid h1 
 {
@@ -101,6 +107,11 @@ ul.nav.navbar-nav.navbar-pills > li > a:hover
 {
 	color: #8cb9f2;
 }
+ul.nav.navbar-nav.navbar-pills > li > a:focus
+{
+	color: #8cb9f2;
+}
+
 
 .navbar-fixed-top
 {

@@ -165,7 +165,7 @@
 			$("#searchQueryInput").val("");
 			$("#books").text("Books");
 			$("#home").text("Home");
-			$("#about").text("About");
+			//$("#about").text("About");
 			$("#searchButton").text("Search");
 			$("#search_header").text("Search the Bible");
 		}
@@ -180,7 +180,7 @@
 			$("#searchQueryInput").val("");
 			$("#books").text("聖經目錄");
 			$("#home").text("首頁");
-			$("#about").text("關於");
+			//$("#about").text("關於");
 			$("#searchButton").text("搜索");
 			$("#search_header").text("搜索聖經");
 		}
@@ -194,7 +194,7 @@
 			$("#searchQueryInput").val("");
 			$("#books").text("圣经目录");
 			$("#home").text("首页");
-			$("#about").text("关于");
+			//$("#about").text("关于");
 			$("#searchButton").text("搜索");
 			$("#search_header").text("搜索圣经");
 		}
