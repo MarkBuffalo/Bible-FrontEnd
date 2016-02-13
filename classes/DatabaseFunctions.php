@@ -11,6 +11,10 @@
 	{
 		if (isset($search) && mb_strlen($search) < 250)
 		{
+			
+			// Remove trailing spaces because they won't trigger our regex.
+			$newSearch = rtrim($search);
+			
 			global $dqo;
 			
 			foreach ($dqo as $d)
@@ -24,10 +28,10 @@
 				$lang = $d->lang;
 				
 				// Is it one of our valid queries, and *NOT* a keyword search?
-				if ($queryType != 5 && preg_match($regex, $search))
+				if ($queryType != 5 && preg_match($regex, $newSearch))
 				{
 					// We've got a match. Split the query into an array based on regex capture groups.
-					$contents = getPregSplitArray($regex, $search);
+					$contents = getPregSplitArray($regex, $newSearch);
 					
 
 					// How big is our array?
@@ -87,7 +91,7 @@
 
 					// Everything looks good. Let's start the parameterization process, and return the results to the visitor.
 
-					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $search, $lang);
+					$results = queryDatabase($query, $parameters, $parameterTypes, $queryType, $newSearch, $lang);
 
 
 					// Found something
@@ -96,9 +100,9 @@
 						return $results;
 					}
 				}
-				else if (preg_match($regex, $search) && $queryType == 5)
+				else if (preg_match($regex, $newSearch) && $queryType == 5)
 				{
-					$results = queryDatabase($query, array($search), $parameterTypes, $queryType, $search, $lang);
+					$results = queryDatabase($query, array($newSearch), $parameterTypes, $queryType, $newSearch, $lang);
 					if (strlen($results) > 10)
 					{
 						return $results;
