@@ -1,15 +1,20 @@
 		var langVal;
+		
+		function hideFooter()
+		{
+			$(".footer").hide();
+		}
+		function showFooter()
+		{
+			$(".footer").show();			
+		}
 	
 		$(document).ready(function()
 		{
-	
 			var query = "";
 			
 			$(".loading").hide();
-			
-			
-
-			
+			hideFooter();
 			
 			// Did the user submit the form in another way? Invoke ajax. 
 			$("form").submit(function (e) 
@@ -62,6 +67,8 @@
 			{
 				// Clear the results.
 				$(searchResults).html("");
+				// Hide the footer.
+				hideFooter();
 			});
 			
 			// For when the user clicks the site logo.
@@ -69,6 +76,8 @@
 			{
 				// Clear results.
 				$(searchResults).html("");
+				// Hide the footer.
+				hideFooter();
 			});			
 			
 			// Whenever a navbar menu is clicked...
@@ -119,6 +128,7 @@
 				{
 					$(".loading").hide();
 					$("#searchResults").html(data);
+					showFooter();
 				},
 				cache: false
 			});	
@@ -138,6 +148,7 @@
 				{
 					$(".loading").hide();
 					$("#searchResults").html(data);
+					showFooter();
 				},
 				cache: false
 			});	

@@ -21,7 +21,6 @@
 
 	</head>
   <body onload="checkLanguage()">
-  
 	<div class="wrap">
 		<a name="top"></a>
 		<nav class="navbar navbar-default navbar-fixed-top">
