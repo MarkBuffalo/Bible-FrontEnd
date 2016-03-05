@@ -241,6 +241,7 @@
 			   if (lang != "" && lang != null) 
 			   {
 				   setLanguage("language", lang, 30);
+				   setEnglish();
 			   }
 			}
 		}
